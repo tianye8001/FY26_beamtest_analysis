@@ -28,10 +28,10 @@ my $z5  = -114.5;
 my $z6  = -267;
 my $hx	= 50;
 my $hy	= 50;
-my $hx4	= 16;
-my $hy4	= 16;
-my $hx5	= 16;
-my $hy5	= 16;
+my $hx4	= 16.4;
+my $hy4	= 16.4;
+my $hx5	= 16.4;
+my $hy5	= 16.4;
 
 sub solid_magnet_virtualplane
 {
