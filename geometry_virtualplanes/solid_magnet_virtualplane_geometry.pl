@@ -26,21 +26,25 @@ my $z2  = -131;
 my $z4  = -114.5;
 my $z5  = -114.5;
 my $z6  = -267;
+my $z7  = -114.5;
 my $hx	= 50;
 my $hy	= 50;
 my $hx4	= 16.4;
 my $hy4	= 16.4;
 my $hx5	= 16.4;
 my $hy5	= 16.4;
+my $Rmin= 7.1;
+my $Rmax= 7.1+0.0001;
 
 sub solid_magnet_virtualplane
 {
 make_1();
 make_2();
 make_3();
-make_4();
-make_5();
+#make_4();
+#make_5();
 make_6();
+make_7();
 }
 
 sub make_1
@@ -188,7 +192,29 @@ sub make_6
  $detector{"identifiers"} = "id manual $ID";
  print_det(\%configuration, \%detector);
 }
-
-
+sub make_7
+{
+ my %detector=init_det();
+ $detector{"name"}        = "$DetectorName\_7";
+ $detector{"mother"}      = "$DetectorMother";
+ $detector{"description"} = $detector{"name"};
+ $detector{"pos"}         = "0*cm 0*cm $z7*cm";
+ $detector{"rotation"}    = "0*deg 0*deg 0*deg";
+ $detector{"color"}       = "CC6633";
+ $detector{"type"}        = "Tube";
+ $detector{"dimensions"}  = "$Rmin*cm $Rmax*cm 16.4*cm 0*deg 360*deg"; 
+ $detector{"material"}    = "G4_Galactic";
+ $detector{"mfield"}      = "no";
+ $detector{"ncopy"}       = 1;
+ $detector{"pMany"}       = 1;
+ $detector{"exist"}       = 1;
+ $detector{"visible"}     = 1;
+ $detector{"style"}       = 0;
+ $detector{"sensitivity"} = "flux";
+ $detector{"hit_type"}    = "flux";
+ my $ID = 54;
+ $detector{"identifiers"} = "id manual $ID";
+ print_det(\%configuration, \%detector);
+}
 solid_magnet_virtualplane();
 1;
