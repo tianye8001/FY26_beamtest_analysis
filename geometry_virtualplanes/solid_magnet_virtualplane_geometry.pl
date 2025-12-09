@@ -22,10 +22,12 @@ my $y4  = 0;
 my $y5  = 0;
 my $z1	= -98;
 my $z3  = -167;
+my $z13  = -167-2.2;
 my $z2  = -131;
 my $z4  = -114.5;
 my $z5  = -114.5;
 my $z6  = -267;
+my $z16  = -267-2.2;
 my $z7  = -114.5;
 my $hx	= 50;
 my $hy	= 50;
@@ -41,9 +43,11 @@ sub solid_magnet_virtualplane
 make_1();
 make_2();
 make_3();
+make_colli1();
 #make_4();
 #make_5();
 make_6();
+make_colli2();
 make_7();
 }
 
@@ -215,6 +219,114 @@ sub make_7
  my $ID = 54;
  $detector{"identifiers"} = "id manual $ID";
  print_det(\%configuration, \%detector);
+}
+sub make_colli1{
+    # Outer box: 30x30x4 cm³ Pb 
+    my $outer_name = "${DetectorName}_collimator_box";
+    my %outer = init_det();
+    $outer{"name"}        = $outer_name;
+    $outer{"mother"}      = $DetectorMother;
+    $outer{"description"} = "30x30 cm pb collimator outer box";
+    $outer{"pos"}         = "0*cm 0*cm $z13*cm";
+    $outer{"rotation"}    = "0*deg 0*deg 0*deg";
+    $outer{"color"}       = "cc6633";
+    $outer{"type"}        = "Box";
+    $outer{"dimensions"}  = "15*cm 15*cm 2*cm";
+    $outer{"material"}    = "G4_Pb";
+    $outer{"visible"}     = 0;
+    print_det(\%configuration, \%outer);
+
+    # Inner box (hole): 10x10x0.1 cm³ Air
+    my $inner_name = "${DetectorName}_collimator_hole";
+    my %inner = init_det();
+    $inner{"name"}        = $inner_name;
+    $inner{"mother"}      = $DetectorMother;
+    $inner{"description"} = "10x10 cm air hole inside collimator";
+    $inner{"pos"}         = "0*cm 0*cm $z13*cm";
+    $inner{"rotation"}    = "0*deg 0*deg 0*deg";
+    $inner{"color"}       = "00ccff";  # light blue for visibility
+    $inner{"type"}        = "Box";
+    $inner{"dimensions"}  = "5*cm 5*cm 2*cm";
+    $inner{"material"}    = "G4_AIR";
+    $inner{"style"}       = 1;
+    $inner{"visible"}     = 1;
+    $inner{"mfield"}      = "no";
+    $inner{"sensitivity"} = "no";
+    $inner{"hit_type"}    = "no";
+    $inner{"identifiers"} = "no";
+    print_det(\%configuration, \%inner);
+
+    # Boolean operation: subtract hole from the box
+    my %collimator = init_det();
+    $collimator{"name"}        = "${DetectorName}_collimator_final";
+    $collimator{"mother"}      = $DetectorMother;
+    $collimator{"description"} = "Final collimator with 10x10 cm air hole";
+    $collimator{"pos"}         = "0*cm 0*cm $z13*cm";
+    $collimator{"rotation"}    = "0*deg 0*deg 0*deg";
+    $collimator{"color"}       = "cc6633";
+    $collimator{"type"}        = "Operation: $outer_name - $inner_name";
+    $collimator{"material"}    = "G4_Pb";
+    $collimator{"style"}       = 1;
+   $collimator{"visible"}     = 1;
+    $collimator{"mfield"}      = "no";
+    $collimator{"sensitivity"} = "no";
+    $collimator{"hit_type"}    = "no";
+    $collimator{"identifiers"} = "no";
+    print_det(\%configuration, \%collimator);
+}
+sub make_colli2 {
+    # Outer box: 30x30x4 cm³ Pb
+    my $outer_name = "${DetectorName}_collimator_box_2";
+    my %outer = init_det();
+    $outer{"name"}        = $outer_name;
+    $outer{"mother"}      = $DetectorMother;
+    $outer{"description"} = "30x30 cm Pb collimator outer box 2";
+    $outer{"pos"}         = "0*cm 0*cm $z16*cm";
+    $outer{"rotation"}    = "0*deg 0*deg 0*deg";
+    $outer{"color"}       = "cc6633";
+    $outer{"type"}        = "Box";
+    $outer{"dimensions"}  = "15*cm 15*cm 2*cm";
+    $outer{"material"}    = "G4_Pb";
+    $outer{"visible"}     = 0;
+    print_det(\%configuration, \%outer);
+
+    # Inner box (hole): 10x10x0.1 cm³ Air
+    my $inner_name = "${DetectorName}_collimator_hole_2";
+    my %inner = init_det();
+    $inner{"name"}        = $inner_name;
+    $inner{"mother"}      = $DetectorMother;
+    $inner{"description"} = "10x10 cm air hole inside collimator 2";
+    $inner{"pos"}         = "0*cm 0*cm $z16*cm";
+    $inner{"rotation"}    = "0*deg 0*deg 0*deg";
+    $inner{"color"}       = "00ccff";  # light blue for visibility
+    $inner{"type"}        = "Box";
+    $inner{"dimensions"}  = "5*cm 5*cm 2*cm";
+    $inner{"material"}    = "G4_AIR";
+    $inner{"style"}       = 1;
+    $inner{"visible"}     = 1;
+    $inner{"mfield"}      = "no";
+    $inner{"sensitivity"} = "no";
+    $inner{"hit_type"}    = "no";
+    $inner{"identifiers"} = "no";
+    print_det(\%configuration, \%inner);
+
+    # Boolean operation: subtract hole from the box
+    my %collimator = init_det();
+    $collimator{"name"}        = "${DetectorName}_collimator_final_2";
+    $collimator{"mother"}      = $DetectorMother;
+    $collimator{"description"} = "Final collimator with 10x10 cm air hole";
+    $collimator{"pos"}         = "0*cm 0*cm $z16*cm";
+    $collimator{"rotation"}    = "0*deg 0*deg 0*deg";
+    $collimator{"color"}       = "cc6633";
+    $collimator{"type"}        = "Operation: $outer_name - $inner_name";
+    $collimator{"material"}    = "G4_Pb";
+    $collimator{"style"}       = 1;
+    $collimator{"visible"}     = 1;
+    $collimator{"mfield"}      = "no";
+    $collimator{"sensitivity"} = "no";
+    $collimator{"hit_type"}    = "no";
+    $collimator{"identifiers"} = "no";
+   print_det(\%configuration, \%collimator);
 }
 solid_magnet_virtualplane();
 1;
