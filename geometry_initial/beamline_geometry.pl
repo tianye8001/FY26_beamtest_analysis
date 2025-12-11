@@ -50,7 +50,7 @@ sub beamline
 #make_beam_dummy();
 # make_beam_LH2_CH();
 make_target();
-#make_window();
+make_target_window();
 # make_beam_LH2();
 # make_beam_LD2();
 #make_beam_carbon();
@@ -274,7 +274,7 @@ sub make_beam_exit
 sub make_beam_exit_long
 {
  my $NUM  = 4;
- my @z    = (10/2+1500,0,-1500+0.02*2.54/2,1500-0.01);
+ my @z    = (10/2+1500+0.0508,0,-1500+0.02*2.54/2,1500-0.01);
  my @Rin = (0,0,0,0);
  my @Rout1 = (2.375/2*2.54,2.067/2*2.54,2.067/2*2.54,10.067/2*2.54);
  my @Rout2 = (10.375/2*2.54,10.067/2*2.54,2.067/2*2.54,10.067/2*2.54);
@@ -595,36 +595,18 @@ sub make_virutal
  $detector{"identifiers"} = "id manual $ID";
  print_det(\%configuration, \%detector);
 }
-sub make_window 
-{ # Target windows 2024-T3 aluminum 0.02 inches thick. The Chamber has an inner and outer radisus of 41 and 45 inches respectively.        
- my $NUM  = 1;
- my @z    = (0);
-# my @z    = (0,0,0,0);
- my @Rin  = ((45./2-0.02)*2.54);
- my @phi  = (0);
- #my @phi  = (-90,0,-90,0);
- my @thetaT  = (113.5);
- my @thetaS  = (66.5);
- my @Rout = (45./2*2.54);
- my @Dz   = (17.0/2*2.54);
- my @name = ("$DetectorName\_TACWI");
- my @mother=("$DetectorMother");
- my @mat  = ("Al_2024");
- my @color  = ("808080");
-
- for(my $n=1; $n<=$NUM; $n++)
- {
-#     my $pnumber     = cnumber($n-1, 10);
+sub make_target_window
+ { 
     my %detector=init_det();
-    $detector{"name"}        = "$name[$n-1]";
-    $detector{"mother"}      = "$mother[$n-1]" ;
+    $detector{"name"}        = "$DetectorName\_targeti\_window";
+    $detector{"mother"}      = "$DetectorMother" ;
     $detector{"description"} = $detector{"name"};
-    $detector{"pos"}        = "0*cm 0*cm $z[$n-1]*cm";
-    $detector{"rotation"}   = "$phi[$n-1]*deg 0*deg 0*deg";
-    $detector{"color"}      = $color[$n-1];
+    $detector{"pos"}        = "0*cm 0*cm 5.0254*cm";
+    $detector{"rotation"}   = "0*deg 0*deg 0*deg";
+    $detector{"color"}      = "CC6633";
     $detector{"type"}       = "Tube";
-    $detector{"dimensions"} = "$Rin[$n-1]*cm $Rout[$n-1]*cm $Dz[$n-1]*cm $thetaS[$n-1]*deg $thetaT[$n-1]*deg";
-    $detector{"material"}   = $mat[$n-1];
+    $detector{"dimensions"} = "0*cm 1.88*cm 0.0254*cm 0*deg 360*deg";
+    $detector{"material"}   = "Al_2024";
     $detector{"mfield"}     = "no";
     $detector{"ncopy"}      = 1;
     $detector{"pMany"}       = 1;
@@ -636,7 +618,6 @@ sub make_window
     $detector{"identifiers"} = "no";
     print_det(\%configuration, \%detector);
  }
-}
 
 beamline();
 1;
