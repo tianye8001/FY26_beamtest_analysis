@@ -245,6 +245,9 @@ sub make_colli1{
     $outer{"type"}        = "Box";
     $outer{"dimensions"}  = "$hx13*cm $hy13*cm 2*cm";
     $outer{"material"}    = "G4_Pb";
+    $outer{"ncopy"}       = 1;
+    $outer{"pMany"}       = 1;
+    $outer{"exist"}       = 1;
     $outer{"visible"}     = 0;
     print_det(\%configuration, \%outer);
 
@@ -260,6 +263,9 @@ sub make_colli1{
     $inner{"type"}        = "Box";
     $inner{"dimensions"}  = "5*cm 5*cm 2*cm";
     $inner{"material"}    = "G4_AIR";
+    $inner{"ncopy"}       = 1;
+    $inner{"pMany"}       = 1;
+    $inner{"exist"}       = 1;
     $inner{"style"}       = 1;
     $inner{"visible"}     = 1;
     $inner{"mfield"}      = "no";
@@ -278,8 +284,11 @@ sub make_colli1{
     $collimator{"color"}       = "cc6633";
     $collimator{"type"}        = "Operation: $outer_name - $inner_name";
     $collimator{"material"}    = "G4_Pb";
+    $collimator{"ncopy"}       = 1;
+    $collimator{"pMany"}       = 1;
+    $collimator{"exist"}       = 1;
     $collimator{"style"}       = 1;
-   $collimator{"visible"}     = 1;
+    $collimator{"visible"}     = 1;
     $collimator{"mfield"}      = "no";
     $collimator{"sensitivity"} = "no";
     $collimator{"hit_type"}    = "no";
@@ -299,6 +308,9 @@ sub make_colli2 {
     $outer{"type"}        = "Box";
     $outer{"dimensions"}  = "$hx16*cm $hx16*cm 2*cm";
     $outer{"material"}    = "G4_Pb";
+    $outer{"ncopy"}       = 1;
+    $outer{"pMany"}       = 1;
+    $outer{"exist"}       = 1;
     $outer{"visible"}     = 0;
     print_det(\%configuration, \%outer);
 
@@ -314,6 +326,9 @@ sub make_colli2 {
     $inner{"type"}        = "Box";
     $inner{"dimensions"}  = "5*cm 5*cm 2*cm";
     $inner{"material"}    = "G4_AIR";
+    $inner{"ncopy"}       = 1;
+    $inner{"pMany"}       = 1;
+    $inner{"exist"}       = 1;
     $inner{"style"}       = 1;
     $inner{"visible"}     = 1;
     $inner{"mfield"}      = "no";
@@ -332,6 +347,9 @@ sub make_colli2 {
     $collimator{"color"}       = "cc6633";
     $collimator{"type"}        = "Operation: $outer_name - $inner_name";
     $collimator{"material"}    = "G4_Pb";
+    $collimator{"ncopy"}       = 1;
+    $collimator{"pMany"}       = 1;
+    $collimator{"exist"}       = 1;
     $collimator{"style"}       = 1;
     $collimator{"visible"}     = 1;
     $collimator{"mfield"}      = "no";
@@ -352,6 +370,9 @@ sub make_Tunnel_right
  $detector{"type"}       = "Box";
  $detector{"dimensions"} = "$hx4*cm $hy4*cm 2*cm";	    
  $detector{"material"}    = "G4_Pb";
+ $detector{"ncopy"}       = 1;
+ $detector{"pMany"}       = 1;
+ $detector{"exist"}       = 1;
  $detector{"visible"}     = 1;
  $detector{"style"}       = 1;
  $detector{"mfield"}      = "no";
@@ -373,6 +394,9 @@ sub make_Tunnel_left
  $detector{"dimensions"} = "$hx5*cm $hy5*cm 2*cm";	    
  $detector{"material"}    = "G4_Pb";
  $detector{"mfield"}      = "no";
+ $detector{"ncopy"}       = 1;
+ $detector{"pMany"}       = 1;
+ $detector{"exist"}       = 1;
  $detector{"visible"}     = 1;
  $detector{"style"}       = 1;
  $detector{"sensitivity"} = "no";
@@ -394,6 +418,9 @@ sub make_Tunnel_top
  $detector{"material"}    = "G4_Pb";
  $detector{"visible"}     = 1;
  $detector{"style"}       = 1;
+ $detector{"ncopy"}       = 1;
+ $detector{"pMany"}       = 1;
+ $detector{"exist"}       = 1;
  $detector{"mfield"}      = "no";
  $detector{"sensitivity"} = "no";
  $detector{"hit_type"}    = "no";
@@ -413,6 +440,9 @@ sub make_Tunnel_bottom
  $detector{"dimensions"} = "$hy25*cm $hx25*cm 2*cm";	    
  $detector{"material"}    = "G4_Pb";
  $detector{"mfield"}      = "no";
+ $detector{"ncopy"}       = 1;
+ $detector{"pMany"}       = 1;
+ $detector{"exist"}       = 1;
  $detector{"visible"}     = 1;
  $detector{"style"}       = 1;
  $detector{"sensitivity"} = "no";
