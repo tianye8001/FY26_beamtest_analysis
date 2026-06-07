@@ -95,7 +95,7 @@ return ;
 }
 
 //bool process_tree_solid_gem(TTree *tree_solid_gem,double &Eend_gem1gas1,double &Eend_gem2gas1,double &Eend_gem1gas2,double &Eend_gem2gas2,double &Eend_gem1gas3,double &Eend_gem2gas3,double &Eend_gem1gas4,double &Eend_gem2gas4,double &Eend_gem1gas6,double &Eend_gem2gas6,double &Eend_gem1gas6,double &Eend_gem2gas6,int &procID_gem, int &mpid_gem, int &pid_gem)
-bool process_tree_solid_gem(TTree *tree_solid_gem,double *Eend_gem1gas,double *Eend_gem2gas, double *Eend_gem3gas,double *Eend_gem4gas, double &Eend_total_gem1, double &Eend_total_gem2, double &Eend_total_gem3, double &Eend_total_gem4, int &procID_gem, int &mpid_gem, int &pid_gem, double &GEM00_x_gem, double &GEM00_y_gem,double &GEM10_x_gem, double &GEM10_y_gem, double &GEM00_vz_gem, double &GEM10_vz_gem)
+bool process_tree_solid_gem(TTree *tree_solid_gem,double *Eend_gem1gas,double *Eend_gem2gas, double *Eend_gem3gas,double *Eend_gem4gas, double &Eend_total_gem1, double &Eend_total_gem2, double &Eend_total_gem3, double &Eend_total_gem4, int &procID_gem, int &mpid_gem, int &pid_gem00, int &pid_gem10, double &GEM00_vx_gem, double &GEM00_vy_gem,double &GEM10_vx_gem, double &GEM10_vy_gem, double &GEM00_vz_gem, double &GEM10_vz_gem, double &GEM00_pz_gem,double &GEM00_px_gem,double &GEM00_py_gem, double &GEM01_pz_gem, double &GEM00_mvz_gem, double &GEM00_mvx_gem, double &GEM00_mvy_gem, double &GEM00_lz_gem, double &GEM00_lx_gem, double &GEM00_ly_gem)
 {
     double DEG=180./3.1415926;   //rad to degree  
     
@@ -121,14 +121,25 @@ bool process_tree_solid_gem(TTree *tree_solid_gem,double *Eend_gem1gas,double *E
    Eend_total_gem3=0;
    Eend_total_gem4=0;
    procID_gem=0;    
-   pid_gem=0;    
+   pid_gem00=0;    
+   pid_gem10=0;    
    mpid_gem=0;    
    GEM00_vz_gem=0;    
-   GEM00_x_gem=0;    
-   GEM00_y_gem=0;    
-   GEM10_x_gem=0;    
-   GEM10_y_gem=0;    
+   GEM00_vx_gem=0;    
+   GEM00_vy_gem=0;    
+   GEM00_lz_gem=0;    
+   GEM00_lx_gem=0;    
+   GEM00_ly_gem=0;    
+   GEM10_vx_gem=0;    
+   GEM10_vy_gem=0;    
    GEM10_vz_gem=0;    
+   GEM00_pz_gem=0;    
+   GEM00_px_gem=0;    
+   GEM00_py_gem=0;    
+   GEM01_pz_gem=0;    
+   GEM00_mvz_gem=0;    
+   GEM00_mvx_gem=0;    
+   GEM00_mvy_gem=0;    
     //loop over data tree
     for(std::size_t j=0; j<gem_hitn->size(); j++){
        int detector_ID=gem_id->at(j)/1000000;
@@ -136,8 +147,10 @@ bool process_tree_solid_gem(TTree *tree_solid_gem,double *Eend_gem1gas,double *E
        int subsubdetector_ID=((gem_id->at(j)%1000000)%100000)/10000;
        int component_ID=gem_id->at(j)%1000;  
    //cout<<"detector_ID="<<detector_ID<<"subdetector_ID="<<subdetector_ID<<"subsubdetector_ID="<<subsubdetector_ID<<"component_ID="<<component_ID<<endl;
-   if(detector_ID==1 && subdetector_ID==1){
-      Eend_total_gem1 += gem_ETot->at(j);
+  //if(gem_pz->at(j)<0){
+     if(detector_ID==1 && subdetector_ID==1){
+      //Eend_total_gem1 += gem_ETot->at(j);
+      Eend_total_gem1 += gem_trE->at(j);
      if(component_ID==3){
        Eend_gem1gas[0] += gem_ETot->at(j);
      }
@@ -156,12 +169,25 @@ bool process_tree_solid_gem(TTree *tree_solid_gem,double *Eend_gem1gas,double *E
      if(component_ID==22){
        Eend_gem1gas[5] += gem_ETot->at(j);
      }
-      GEM00_x_gem = gem_lxin->at(j); 
-      GEM00_y_gem = gem_lyin->at(j); 
+      GEM00_vx_gem = gem_vx->at(j); 
+      GEM00_vy_gem = gem_vy->at(j); 
       GEM00_vz_gem = gem_vz->at(j); 
+      GEM00_pz_gem = gem_pz->at(j); 
+      GEM00_px_gem = gem_px->at(j); 
+      GEM00_py_gem = gem_py->at(j); 
+      pid_gem00 = gem_pid->at(j); 
+      GEM00_mvz_gem = gem_mvz->at(j); 
+      GEM00_mvx_gem = gem_mvx->at(j); 
+      GEM00_mvy_gem = gem_mvy->at(j); 
+      procID_gem = gem_procID->at(j);
+      mpid_gem = gem_mpid->at(j);      
+      GEM00_lx_gem = gem_lxin->at(j); 
+      GEM00_ly_gem = gem_lyin->at(j); 
+      GEM00_lz_gem = gem_lzin->at(j); 
   }
    if(detector_ID==1 && subdetector_ID==2){
-      Eend_total_gem2 += gem_ETot->at(j);
+      //Eend_total_gem2 += gem_ETot->at(j);
+      Eend_total_gem2 += gem_trE->at(j);
     if(component_ID==3){
        Eend_gem2gas[0] += gem_ETot->at(j);
      }
@@ -180,11 +206,13 @@ bool process_tree_solid_gem(TTree *tree_solid_gem,double *Eend_gem1gas,double *E
      if(component_ID==22){
        Eend_gem2gas[5] += gem_ETot->at(j);
      }
+      GEM01_pz_gem = gem_pz->at(j); 
       //GEM01_x_gem = gem_x->at(j); 
       //GEM01_y_gem = gem_y->at(j); 
    }
    if(detector_ID==1 && subdetector_ID==3){
-      Eend_total_gem3 += gem_ETot->at(j);
+      //Eend_total_gem3 += gem_ETot->at(j);
+      Eend_total_gem3 += gem_trE->at(j);
     if(component_ID==3){
        Eend_gem3gas[0] += gem_ETot->at(j);
      }
@@ -203,12 +231,14 @@ bool process_tree_solid_gem(TTree *tree_solid_gem,double *Eend_gem1gas,double *E
      if(component_ID==22){
        Eend_gem3gas[5] += gem_ETot->at(j);
      }
-      GEM10_x_gem = gem_lxin->at(j); 
-      GEM10_y_gem = gem_lyin->at(j); 
+      GEM10_vx_gem = gem_vx->at(j); 
+      GEM10_vy_gem = gem_vy->at(j); 
       GEM10_vz_gem = gem_vz->at(j); 
+      pid_gem10 = gem_pid->at(j); 
    }
    if(detector_ID==1 && subdetector_ID==4){
-      Eend_total_gem4 += gem_ETot->at(j);
+      //Eend_total_gem4 += gem_ETot->at(j);
+      Eend_total_gem4 += gem_trE->at(j);
     if(component_ID==3){
        Eend_gem4gas[0] += gem_ETot->at(j);
      }
@@ -230,12 +260,13 @@ bool process_tree_solid_gem(TTree *tree_solid_gem,double *Eend_gem1gas,double *E
       //GEM11_x_gem = gem_x->at(j); 
       //GEM11_y_gem = gem_y->at(j); 
    }
-      procID_gem = gem_procID->at(j);
-      mpid_gem = gem_mpid->at(j);      
-      pid_gem = gem_pid->at(j); 
+      //procID_gem = gem_procID->at(j);
+      //mpid_gem = gem_mpid->at(j);      
+      //pid_gem = gem_pid->at(j); 
     //if(gem_id->at(j)==111006){     
     //cout<<"id="<<subdetector_ID<<"Edep="<<gem_ETot->at(j)<<endl;
    // }
+   //}
   }  
 return 0;
 
